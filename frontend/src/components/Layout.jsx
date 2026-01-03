@@ -9,15 +9,15 @@ export default function Layout() {
                 <nav>
                     <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                         <LayoutDashboard size={20} />
-                        Dashboard
+                        대시보드
                     </NavLink>
                     <NavLink to="/mentees" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                         <Users size={20} />
-                        Mentees
+                        멘티 관리
                     </NavLink>
                     <NavLink to="/calendar" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                         <Calendar size={20} />
-                        Calendar
+                        캘린더
                     </NavLink>
                 </nav>
             </aside>

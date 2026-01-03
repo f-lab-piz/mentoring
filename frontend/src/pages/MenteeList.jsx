@@ -23,12 +23,12 @@ export default function MenteeList() {
             setNewMentee({ name: '', goal: '' });
             fetchMentees();
         } catch (error) {
-            alert('Failed to create mentee');
+            alert('멘티 생성 실패');
         }
     };
 
     const handleDelete = async (id) => {
-        if (confirm('Are you sure you want to delete this mentee?')) {
+        if (confirm('정말 삭제하시겠습니까?')) {
             await api.delete(`/api/v1/mentees/${id}`);
             fetchMentees();
         }
@@ -37,10 +37,10 @@ export default function MenteeList() {
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <h1>Mentee Management</h1>
+                <h1>멘티 관리</h1>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Plus size={16} /> Add Mentee
+                        <Plus size={16} /> 멘티 등록
                     </div>
                 </button>
             </div>
@@ -50,9 +50,9 @@ export default function MenteeList() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Goal</th>
-                            <th>Actions</th>
+                            <th>이름</th>
+                            <th>목표</th>
+                            <th>관리</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,7 +70,7 @@ export default function MenteeList() {
                         ))}
                         {mentees.length === 0 && (
                             <tr>
-                                <td colSpan="4" style={{ textAlign: 'center', padding: '2rem' }}>No mentees found.</td>
+                                <td colSpan="4" style={{ textAlign: 'center', padding: '2rem' }}>등록된 멘티가 없습니다.</td>
                             </tr>
                         )}
                     </tbody>
@@ -83,10 +83,10 @@ export default function MenteeList() {
                     backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center'
                 }}>
                     <div className="card" style={{ width: '400px' }}>
-                        <h2 style={{ marginBottom: '1.5rem' }}>Add New Mentee</h2>
+                        <h2 style={{ marginBottom: '1.5rem' }}>새 멘티 등록</h2>
                         <form onSubmit={handleCreate}>
                             <div style={{ marginBottom: '1rem' }}>
-                                <label>Name</label>
+                                <label>이름</label>
                                 <input
                                     value={newMentee.name}
                                     onChange={e => setNewMentee({ ...newMentee, name: e.target.value })}
@@ -94,15 +94,15 @@ export default function MenteeList() {
                                 />
                             </div>
                             <div style={{ marginBottom: '1.5rem' }}>
-                                <label>Goal</label>
+                                <label>목표</label>
                                 <textarea
                                     value={newMentee.goal}
                                     onChange={e => setNewMentee({ ...newMentee, goal: e.target.value })}
                                 />
                             </div>
                             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-                                <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--color-border)' }}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">Save</button>
+                                <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--color-border)' }}>취소</button>
+                                <button type="submit" className="btn btn-primary">저장</button>
                             </div>
                         </form>
                     </div>

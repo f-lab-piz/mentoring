@@ -21,7 +21,7 @@ export default function CalendarPage() {
         api.get('/api/v1/sessions').then(res => {
             const formattedEvents = res.data.map(session => ({
                 id: session.id,
-                title: `Mentoring #${session.mentee_id}`, // In real app, join with mentee name
+                title: `멘토링 #${session.mentee_id}`, // In real app, join with mentee name
                 start: session.start_time,
                 end: new Date(new Date(session.start_time).getTime() + session.duration_minutes * 60000).toISOString(),
                 backgroundColor: 'var(--color-primary)',
@@ -43,10 +43,10 @@ export default function CalendarPage() {
             await api.put(`/api/v1/sessions/${info.event.id}`, {
                 start_time: newStart
             });
-            alert('Event rescheduled successfully');
+            alert('일정이 변경되었습니다.');
         } catch (error) {
             info.revert();
-            alert('Failed to update event');
+            alert('일정 변경 실패');
         }
     };
 
@@ -61,13 +61,13 @@ export default function CalendarPage() {
             setShowModal(false);
             fetchEvents();
         } catch (error) {
-            alert('Failed to create session');
+            alert('세션 생성 실패');
         }
     };
 
     return (
         <div style={{ height: 'calc(100vh - 4rem)', display: 'flex', flexDirection: 'column' }}>
-            <h1>Calendar</h1>
+            <h1>캘린더</h1>
             <div className="card" style={{ flex: 1, marginTop: '1rem' }}>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -93,23 +93,23 @@ export default function CalendarPage() {
                     display: 'flex', justifyContent: 'center', alignItems: 'center'
                 }}>
                     <div className="card" style={{ width: '400px' }}>
-                        <h2>Schedule Session</h2>
+                        <h2>일정 등록</h2>
                         <form onSubmit={handleSubmit}>
                             <div style={{ marginBottom: '1rem' }}>
-                                <label>Mentee</label>
+                                <label>멘티</label>
                                 <select
                                     value={newEvent.mentee_id}
                                     onChange={e => setNewEvent({ ...newEvent, mentee_id: e.target.value })}
                                     required
                                 >
-                                    <option value="">Select Mentee</option>
+                                    <option value="">멘티 선택</option>
                                     {mentees.map(m => (
                                         <option key={m.id} value={m.id}>{m.name}</option>
                                     ))}
                                 </select>
                             </div>
                             <div style={{ marginBottom: '1rem' }}>
-                                <label>Date & Time</label>
+                                <label>날짜 및 시간</label>
                                 <input
                                     type="datetime-local"
                                     value={newEvent.start_time}
@@ -118,8 +118,8 @@ export default function CalendarPage() {
                                 />
                             </div>
                             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-                                <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--color-border)' }}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">Schedule</button>
+                                <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--color-border)' }}>취소</button>
+                                <button type="submit" className="btn btn-primary">등록</button>
                             </div>
                         </form>
                     </div>
