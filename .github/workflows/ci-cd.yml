@@ -8,8 +8,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_BACKEND: ghcr.io/${{ github.repository_owner }}/mentoring-backend
-  IMAGE_FRONTEND: ghcr.io/${{ github.repository_owner }}/mentoring-frontend
+  IMAGE_BACKEND: ghcr.io/${{ github.actor }}/mentoring-backend
+  IMAGE_FRONTEND: ghcr.io/${{ github.actor }}/mentoring-frontend
 
 jobs:
   backend-test:
