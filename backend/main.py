@@ -24,6 +24,10 @@ app.add_middleware(
 def read_root():
     return {"message": "Welcome to Mentoring System API"}
 
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
+
 # Mentee Endpoints
 @app.post("/api/v1/mentees", response_model=schemas.Mentee)
 def create_mentee(mentee: schemas.MenteeCreate, db: Session = Depends(get_db)):
