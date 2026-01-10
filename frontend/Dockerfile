@@ -14,6 +14,10 @@ RUN npm run build
 # Production stage
 FROM nginx:alpine
 
+# Copy entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 # 빌드 결과물 복사
 COPY --from=builder /app/dist /usr/share/nginx/html
 
@@ -31,6 +35,12 @@ RUN echo 'server { \
         try_files $uri $uri/ /index.html; \
     } \
     \
+    location = /config.js { \
+        add_header Cache-Control "no-cache, no-store, must-revalidate"; \
+        add_header Pragma "no-cache"; \
+        add_header Expires "0"; \
+    } \
+    \
     add_header X-Frame-Options "SAMEORIGIN" always; \
     add_header X-Content-Type-Options "nosniff" always; \
     add_header X-XSS-Protection "1; mode=block" always; \
@@ -38,4 +48,4 @@ RUN echo 'server { \
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
